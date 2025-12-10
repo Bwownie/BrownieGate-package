@@ -143,6 +143,33 @@ class BrownieClient:
                 raise Exception('Failed to contact API.')
         except Exception as e:
             raise Exception(str(e))
+        
+    def get_deleted_users(self):
+        """
+        Retrieve deleted users from the API.
+
+        Returns:
+            list: [user-ids] - List of ids of deleted users
+
+        Raises:
+            Exception: If communication with the API fails.
+        """
+        try:
+            if self.debug:
+                print('Pinging get deleted users')
+            url = f'{self.base_url}/api/user/check_removed'
+            response = requests.post(url, headers=self.base_headers)
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('success'):
+                    return True, result.get('user_ids')
+                else:
+                    return False, []
+            else:
+                raise Exception('Failed to contact API.')
+        except Exception as e:
+            raise Exception(str(e))
 
     def generate_cookie(self, user_id: str):
         """
