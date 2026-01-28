@@ -341,3 +341,30 @@ class BrownieClient:
                 raise Exception('Failed to contact API.')
         except Exception as e:
             raise Exception(str(e))
+        
+    def ping(self):
+        """
+        Sends a ping to the API.
+
+        Args:
+            None.
+
+        Returns:
+            bool: True if connection and credientials are correct. False if otherwise.
+
+        Raises:
+            Exception: If communication with the API fails.
+        """
+        try:
+            if self.debug:
+                print('Pinging API')
+            url = f'{self.base_url}/api/ping'
+            response = requests.post(url, headers=self.base_headers)
+            
+            if response.status_code == 200:
+                result = response.json()
+                return bool(result.get('success'))
+            else:
+                raise Exception('Failed to contact API.')
+        except Exception as e:
+            raise Exception(str(e))
