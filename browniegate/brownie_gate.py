@@ -359,7 +359,7 @@ class BrownieClient:
             if self.debug:
                 print('Pinging API')
             url = f'{self.base_url}/api/ping'
-            response = requests.post(url, headers=self.base_headers)
+            response = requests.get(url, headers=self.base_headers)
             
             if response.status_code == 200:
                 result = response.json()
